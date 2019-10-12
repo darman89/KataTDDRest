@@ -1,7 +1,7 @@
 ## KATA TDD 02
 
 ### Integrantes
-- María Isable Arévalo Robinson
+- María Isabel Arévalo Robinson
 - Armando Acosta Guerrero
 
 ### Problema
