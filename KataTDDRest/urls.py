@@ -21,6 +21,6 @@ from KataTDD import views
 urlpatterns = [
     path('admin/', admin.site.urls),
     path('portafolio/', views.index),
-    path('portafolio/addUser/', views.add_user_view)
-
+    path('portafolio/addUser/', views.add_user_view),
+    path('portafolio/getInfo/<int:user_id>', views.get_view_public_info)
 ]

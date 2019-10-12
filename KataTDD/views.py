@@ -1,12 +1,12 @@
 from django.core import serializers
-from django.http import HttpResponse
+from django.http import HttpResponse, JsonResponse
 import json
 
 # Create your views here.
 from django.views.decorators.csrf import csrf_exempt
 
 from KataTDD.models import Portafolio
-from .models import User
+from KataTDD.models import User, Imagen
 
 
 @csrf_exempt
@@ -36,3 +36,15 @@ def add_user_view(request):
         user_model.save()
 
     return HttpResponse(serializers.serialize("json", [user_model]))
+
+
+@csrf_exempt
+def get_view_public_info(request, user_id):
+
+    if request.method == 'GET':
+        portafolio = Portafolio.objects.get(usuario=user_id)
+        images = Imagen.objects.filter(portafolio=portafolio, es_publica=True).select_related('portafolio').all()
+        imagesList = list(images.values())
+        result = [{'images': imagesList}]
+
+    return JsonResponse(result, safe=False)
