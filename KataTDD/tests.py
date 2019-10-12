@@ -22,3 +22,10 @@ class PortafolioTestCase(TestCase):
         current_data = json.loads(response.content)
         print(current_data)
         self.assertEqual(len(current_data), 2)
+
+    def test_get_info_user(self):
+        response = self.client.post('/portafolio/addUser/', json.dumps(
+            {"username": "test", "first_name": "test", "last_name": "test", "password": "AnyPas#5",
+             "email": "test@test.com", "foto": "test", "perfil": "test"}), content_type='application/json')
+        current_data = json.loads(response.content)
+        self.assertEqual(current_data[0]['fields']['username'], 'test')
