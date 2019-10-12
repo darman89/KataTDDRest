@@ -71,6 +71,7 @@ TEMPLATES = [
 
 WSGI_APPLICATION = 'KataTDDRest.wsgi.application'
 
+AUTH_USER_MODEL = "KataTDD.User"
 
 # Database
 # https://docs.djangoproject.com/en/2.2/ref/settings/#databases
