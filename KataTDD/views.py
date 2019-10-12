@@ -1,3 +1,4 @@
+from django.contrib.auth import authenticate
 from django.core import serializers
 from django.http import HttpResponse, JsonResponse
 import json
@@ -40,7 +41,6 @@ def add_user_view(request):
 
 @csrf_exempt
 def get_view_public_info(request, user_id):
-
     if request.method == 'GET':
         portafolio = Portafolio.objects.get(usuario=user_id)
         images = Imagen.objects.filter(portafolio=portafolio, es_publica=True).select_related('portafolio').all()
@@ -48,3 +48,12 @@ def get_view_public_info(request, user_id):
         result = [{'images': imagesList}]
 
     return JsonResponse(result, safe=False)
+
+
+def user_login(request):
+    user_params = json.loads(request.body)
+    user = authenticate(username=user_params['username'], password=user_params['password'])
+    if user is not None:
+        return JsonResponse({'status': 'Authenticated'})
+    else:
+        return JsonResponse({'status': 'Error'})
