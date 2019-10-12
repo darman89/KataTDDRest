@@ -56,3 +56,18 @@ class PortafolioTestCase(TestCase):
             {"username": user_model.username, "password": 'kd8wke-DE34'}), content_type='application/json')
         current_data = json.loads(response.content)
         self.assertEqual(current_data['status'], 'Authenticated')
+
+    def test_edit_user(self):
+        user_model = User.objects.create_user(username='test', password='kd8wke-DE34', first_name='test',
+                                              last_name='test', email='test@test.com',
+                                              foto="test", perfil="test")
+        self.client.post('/portafolio/login/', json.dumps(
+            {"username": user_model.username, "password": 'kd8wke-DE34'}), content_type='application/json')
+
+        user = {"first_name": 'prueba edicion', "foto": 'fotonueva'}
+        response = self.client.post('/portafolio/profile/', json.dumps(user), content_type='application/json')
+        current_data = json.loads(response.content)
+        self.assertEqual(current_data['fields']['first_name'], 'prueba edicion')
+        self.assertEqual(current_data['fields']['foto'], 'fotonueva')
+
+
