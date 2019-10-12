@@ -1,6 +1,7 @@
 from django.test import TestCase
 from .models import Portafolio, User, Imagen
 import json
+from django.contrib.auth import authenticate
 
 
 # Create your tests here.
@@ -46,3 +47,12 @@ class PortafolioTestCase(TestCase):
         current_data = json.loads(response.content)
         self.assertEqual(current_data[0]['images'][0]['es_publica'], True)
         self.assertEqual(len(current_data[0]['images']), 1)
+
+    def test_login(self):
+        user_model = User.objects.create_user(username='test', password='kd8wke-DE34', first_name='test',
+                                              last_name='test', email='test@test.com',
+                                              foto="test", perfil="test")
+        response = self.client.post('/portafolio/login/', json.dumps(
+            {"username": user_model.username, "password": user_model.password}), content_type='application/json')
+        current_data = json.loads(response.content)
+        self.assertEqual(current_data.status, 'Authenticated')
