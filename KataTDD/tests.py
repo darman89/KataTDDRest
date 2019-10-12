@@ -55,4 +55,4 @@ class PortafolioTestCase(TestCase):
         response = self.client.post('/portafolio/login/', json.dumps(
             {"username": user_model.username, "password": user_model.password}), content_type='application/json')
         current_data = json.loads(response.content)
-        self.assertEqual(current_data.status, 'Authenticated')
+        self.assertEqual(current_data['status'], 'Authenticated')
