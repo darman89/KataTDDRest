@@ -57,3 +57,20 @@ def user_login(request):
         return JsonResponse({'status': 'Authenticated'})
     else:
         return JsonResponse({'status': 'Error'})
+
+
+def update_field(self, key, value):
+    getattr(self, key)
+    setattr(self, key, value)
+
+
+def user_profile_update(request):
+    if not request.user.is_authenticated:
+        return JsonResponse({'status': 'Error'})
+    else:
+        user = request.user
+        profile_params = json.loads(request.body)
+        for key, value in profile_params.items():
+            update_field(user, key, value)
+        user.save(update_fields=profile_params.keys())
+        return HttpResponse(serializers.serialize("json", [user]))

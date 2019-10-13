@@ -23,5 +23,6 @@ urlpatterns = [
     path('portafolio/', views.index),
     path('portafolio/addUser/', views.add_user_view),
     path('portafolio/getInfo/<int:user_id>', views.get_view_public_info),
-    path('portafolio/login/', views.user_login)
+    path('portafolio/login/', views.user_login),
+    path('portafolio/profile/', views.user_profile_update)
 ]
